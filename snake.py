@@ -23,6 +23,30 @@ w.addch(food[0], food[1], curses.ACS_PI)  # add the food to the screen
 
 key = curses.KEY_RIGHT  # set initial direction of the snake
 
+# infinite loop for every movement of the snake
+while True:
+    next_key = w.getch()  # check what the next key is
+    key = key if next_key == -1 else next_key  # update the key value only when there is a new key
 
+    # check if the user has lost the game
+    if snake[0][0] in [0, sh] or snake[0,1] in [0, sw] or snake[0] in snake[1:]:
+        curses.endwin()
+        quit()
 
+    new_head = [snake[0][0], snake[0][1]]  # determine what the new head of the snake will be
+
+    # determine what key was down
+    if key == curses.KEY_DOWN:
+        new_head[0] += 1
+    if key == curses.KEY_UP:
+        new_head[0] -= 1
+    if key == curses.KEY_LEFT:
+        new_head[0] -= 1
+    if key == curses.KEY_RIGHT:
+        new_head[0] += 1
+
+    # insert the new head of the snake
+    snake.insert(0, new_head)
+
+    
 
